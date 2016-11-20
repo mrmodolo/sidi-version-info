@@ -34,8 +34,8 @@ def get_version_content_from_ear(ear_filename):
         print 'Não foi possível encontrar o arquivo  %s no pacote' % filename
         sys.exit(1)
 
-def get_version(content):
-    v = re.search('([0-9]*\.[0-9]*\.[0-9]*)',content)
+def get_version(content, pattern):
+    v = re.search(pattern, content)
     return v.group(0)
 
 def main():
@@ -43,7 +43,7 @@ def main():
     ear_filename = get_ear_filename()
     versao_xml = get_version_content_from_ear(ear_filename)
     # var version = '1.6.4';
-    print get_version(versao_xml)
+    print get_version(versao_xml, '([0-9]*\.[0-9]*\.[0-9]*)')
     sys.exit(0)
 
 if __name__ == "__main__":
