@@ -1,0 +1,13 @@
+---
+- hosts: 127.0.0.1
+  connection: local
+  vars:
+    path: /home/modolo/Desenvolvimento/sidi-version-info
+  tasks:
+    - name: Testa o script de versão!
+      command: "{{ path }}/get-version-from-ear.py  {{ path }}/sidi.ear"
+      register: versao
+
+    - debug:
+        var: versao.stdout_lines
+
