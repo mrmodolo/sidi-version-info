@@ -1,5 +1,7 @@
 #!/bin/env python2
 # -*- coding: utf-8 -*-
+# How to read from a zip file within zip file in Python?
+# <http://stackoverflow.com/questions/12025469/how-to-read-from-a-zip-file-within-zip-file-in-python>
 
 import zipfile
 import sys
@@ -8,14 +10,21 @@ import re
 
 
 def argparse():
+    """Verifica se o nome do aruivo ear foi passado,
+    em caso contrário mostra mensagem de uso e sai.
+    """
     if len(sys.argv) < 2:
         print "Uso: get-version-from-ear.py EAR"
         sys.exit(1)
 
 def get_ear_filename():
+    """Retorna o nome do ear passado
+    """
     return sys.argv[1]
 
 def get_version_content_from_ear(ear_filename):
+    """Retorna o conteúdo do aqruivo de versão
+    """
     ear = get_ear_filename()
     try:
         with zipfile.ZipFile(ear, 'r') as ear_zf:
@@ -35,6 +44,9 @@ def get_version_content_from_ear(ear_filename):
         sys.exit(1)
 
 def get_version(content, pattern):
+    """Retorna a versão usando um expressão
+    regular
+    """
     v = re.search(pattern, content)
     return v.group(0)
 
@@ -42,7 +54,7 @@ def main():
     argparse()
     ear_filename = get_ear_filename()
     versao_xml = get_version_content_from_ear(ear_filename)
-    # var version = '1.6.4';
+    # var version = 'X.Y.Z';
     print get_version(versao_xml, '([0-9]*\.[0-9]*\.[0-9]*)')
     sys.exit(0)
 
